@@ -12,7 +12,7 @@ map $http_origin $allowed_origin {
 
 server {
     listen       8081;
-    server_name  explorer-visualizer;
+    server_name  ${COMMON_HOST};
     proxy_http_version 1.1;
     proxy_hide_header Access-Control-Allow-Origin;
     proxy_hide_header Access-Control-Allow-Methods;
