@@ -12,7 +12,7 @@ services:
     restart: always
     stop_grace_period: 5m
     env_file:
-      - ../envs/common-blockscout.env
+      - ./envs/common-blockscout.env
     ports:
       - 4001:4000
     environment:
@@ -46,7 +46,7 @@ services:
     restart: always
     platform: linux/amd64
     env_file:
-      - ../envs/common-frontend.env
+      - ./envs/common-frontend.env
     environment:
       - NEXT_PUBLIC_APP_PORT=3001
       - NEXT_PUBLIC_NETWORK_NAME=Tohma
@@ -88,7 +88,7 @@ services:
     platform: linux/amd64
     restart: always
     env_file:
-      - ../envs/common-stats.env
+      - ./envs/common-stats.env
     ports:
       - 8154:8050
     environment:
@@ -105,7 +105,7 @@ services:
     container_name: proxy
     image: nginx:1.25.3
     volumes:
-      - "../proxy/default.conf.template:/etc/nginx/templates/default.conf.template"
+      - "./proxy/default.conf.template:/etc/nginx/templates/default.conf.template"
     environment:
       PROXIED_FRONT_URL: http://${COMMON_HOST}
       BACK_PROXY_PASS: http://backend:4000
@@ -122,7 +122,7 @@ services:
     restart: always
     container_name: "smart-contract-verifier"
     env_file:
-      - ../envs/common-smart-contract-verifier.env
+      - ./envs/common-smart-contract-verifier.env
     ports:
       - target: 8050
         published: 8150
@@ -134,7 +134,7 @@ services:
     restart: always
     container_name: "visualizer"
     env_file:
-      - ../envs/common-visualizer.env
+      - ./envs/common-visualizer.env
     ports:
       - target: 8050
         published: 8152
@@ -153,7 +153,7 @@ services:
     container_name: "visualizer-proxy"
     image: nginx:1.25.3
     volumes:
-      - "../proxy/visualizer.conf.template:/etc/nginx/templates/default.conf.template"
+      - "./proxy/visualizer.conf.template:/etc/nginx/templates/default.conf.template"
     environment:
       NGINX_CONFIG_VERSION: 1
       PROXIED_FRONT_URL: http://${COMMON_HOST}
