@@ -33,6 +33,9 @@ STOPEXPLORERVISUALIZERPROXY := $(DOCKERCOMPOSE) stop $(DOCKERCOMPOSEEXPLORERVISU
 STOPEXPLORERSTATSDB := $(DOCKERCOMPOSE) stop $(DOCKERCOMPOSEEXPLORERSTATSDB) && $(DOCKERCOMPOSE) rm -f $(DOCKERCOMPOSEEXPLORERSTATSDB)
 STOPEXPLORERSTATS := $(DOCKERCOMPOSE) stop $(DOCKERCOMPOSEEXPLORERSTATS) && $(DOCKERCOMPOSE) rm -f $(DOCKERCOMPOSEEXPLORERSTATS)
 
+BACKENDDBDATAVOLUME := backend_db_data
+STATSDBDATAVOLUME := stats_db_data
+
 .PHONY: run-explorer
 run-explorer: ## Runs all explorer services
 	$(RUNEXPLORERBACKENDDB)
@@ -72,7 +75,7 @@ stop-explorer-db: ## Stops the explorer databases
 
 .PHONY: remove-volumes
 remove-volumes: ## Removes Docker volumes
-	docker volume rm explorer_backend_db_data explorer_stats_db_data
+	docker volume rm $(BACKENDDBDATAVOLUME) $(STATSDBDATAVOLUME)
 
 .PHONY: ps
 ps: ## Check all running services
