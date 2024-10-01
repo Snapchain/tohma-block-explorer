@@ -33,8 +33,8 @@ STOPEXPLORERVISUALIZERPROXY := $(DOCKERCOMPOSE) stop $(DOCKERCOMPOSEEXPLORERVISU
 STOPEXPLORERSTATSDB := $(DOCKERCOMPOSE) stop $(DOCKERCOMPOSEEXPLORERSTATSDB) && $(DOCKERCOMPOSE) rm -f $(DOCKERCOMPOSEEXPLORERSTATSDB)
 STOPEXPLORERSTATS := $(DOCKERCOMPOSE) stop $(DOCKERCOMPOSEEXPLORERSTATS) && $(DOCKERCOMPOSE) rm -f $(DOCKERCOMPOSEEXPLORERSTATS)
 
-BACKENDDBDATAVOLUME := backend_db_data
-STATSDBDATAVOLUME := stats_db_data
+BACKENDDBDATAVOLUME := snapchain-tohma-block-explorer_backend_db_data
+STATSDBDATAVOLUME := snapchain-tohma-block-explorer_stats_db_data
 
 .PHONY: run-explorer
 run-explorer: ## Runs all explorer services
@@ -76,6 +76,13 @@ stop-explorer-db: ## Stops the explorer databases
 .PHONY: remove-volumes
 remove-volumes: ## Removes Docker volumes
 	docker volume rm $(BACKENDDBDATAVOLUME) $(STATSDBDATAVOLUME)
+
+.PHONY: logs
+logs: ## Shows logs
+	$(DOCKERCOMPOSE) logs -f
+
+.PHONY: restart-explorer
+restart-explorer: stop-explorer remove-volumes run-explorer logs
 
 .PHONY: ps
 ps: ## Check all running services
